@@ -135,8 +135,3 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0; 
 }
 
-@media (max-width: 1000px) {
-    .product-display-container {
-        flex-direction: column;
-    }
-}
