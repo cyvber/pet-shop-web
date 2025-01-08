@@ -18,14 +18,18 @@ const app = express();
 const mongo_url = process.env.MONGO_URL; // MongoDB connection string
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
-  : [];
+  : [
+      process.env.WEB_URL,
+      process.env.LOCAL_HOST_URL,
+      process.env.ADMIN_URL,
+    ].filter(Boolean); // Removes undefined if any variable is missing
 
 
 // CORS Configuration
 app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests with valid origins or no origin (e.g., Postman)
+        // Allow requests with no `origin` (e.g., Postman) or from allowed origins
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
@@ -33,10 +37,13 @@ app.use(
         }
       },
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-      credentials: true, // Enable credentials
+      credentials: true, // Allow credentials (cookies, authorization headers)
     })
   );
-app.options("*", cors());
+  
+  // Handle preflight OPTIONS requests
+  app.options("*", cors());
+  
 // Middleware
 app.use(express.json());
 
