@@ -23,21 +23,23 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
       process.env.LOCAL_HOST_URL,
       process.env.ADMIN_URL,
     ].filter(Boolean); // Removes undefined if any variable is missing
+    console.log("Allowed Origins:", allowedOrigins);
 
 
 // CORS Configuration
 app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests with no `origin` (e.g., Postman) or from allowed origins
+        
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
+            console.error(`Blocked by CORS: ${origin}`); // Log blocked origins for debugging
           callback(new Error("Not allowed by CORS"));
         }
       },
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-      credentials: true, // Allow credentials (cookies, authorization headers)
+      credentials: true, 
     })
   );
   
