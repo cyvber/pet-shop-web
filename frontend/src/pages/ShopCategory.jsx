@@ -5,7 +5,7 @@ import Item from '../components/item/Item';
 import { useLocation } from 'react-router-dom';
 
 const ShopCategory = (props) => {
-  const { all_products } = useContext(ShopContext);
+  const { all_products, productType} = useContext(ShopContext);
   const [searchTerm, setSearchTerm] = useState(''); 
   const [visibleProducts, setVisibleProducts] = useState(12); 
   const [isLoading, setIsLoading] = useState(false); 
@@ -15,7 +15,7 @@ const ShopCategory = (props) => {
   const filteredProducts = all_products.filter((item) => {
     return (
       props.category === item.category &&
-      (!props.type || props.type === item.product_type) && // Match type only if it exists
+      (!productType || productType === item.product_type) && // Match type only if it exists
       (
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -68,6 +68,7 @@ const ShopCategory = (props) => {
           <h1 className='category-title'>{getTitle()}</h1>
         </div>
         <img src={props.banner} alt="Category" className="category-banner-image" />
+        
       </div>
 
       <div className="search-bar">

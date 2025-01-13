@@ -86,9 +86,8 @@ const DisplayProduct = (props) => {
                                         
                                     </div>
                                     <p>
-                                        מוצר זה בעגלה שלך:   
                                         {productInCart > 0 && (
-                                            <span className="cart-badge">{productInCart}</span>
+                                            <span className="cart-badge"> מוצר זה בעגלה שלך: {productInCart}  </span>
                                         )} 
                                     </p>
                             </div>

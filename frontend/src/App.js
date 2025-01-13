@@ -8,7 +8,6 @@ import Product from './pages/Product';
 import Cart from './pages/Cart';
 
 import dogs_banner from './components/assets/frontend_assets/dogs_banner.png';
-import dogs_banner1 from './components/assets/frontend_assets/dogs_banner1.png';
 import cats_banner from './components/assets/frontend_assets/cats_banner.png';
 import birds_banner from './components/assets/frontend_assets/birds_banner.png';
 import ShopBrand from './pages/ShopBrand';
@@ -17,9 +16,10 @@ import Carousel from './components/logo_carousel/Carousel';
 
 
 function App() {
+  
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename='/'>
         <Navbar />
         <Routes>
           <Route path='/' element={<Shop />} />

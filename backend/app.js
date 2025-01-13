@@ -22,8 +22,9 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
       process.env.WEB_URL,
       process.env.LOCAL_HOST_URL,
       process.env.ADMIN_URL,
+      process.env.WEB_APP_URL,
     ].filter(Boolean); // Removes undefined if any variable is missing
-    console.log("Allowed Origins:", allowedOrigins);
+    
 
 
 // CORS Configuration

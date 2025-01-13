@@ -194,20 +194,29 @@ import { ShopContext } from '../../context/ShopContext';
 const Navbar = () => {
     const location = useLocation();
     const navigate = useNavigate(); // Hook for navigation
-    const { getTotalItems } = useContext(ShopContext);
+    const { getTotalItems, productType, setProductType} = useContext(ShopContext);
 
     // Determine the active category based on the current pathname
     const activeCategory = () => {
         const path = location.pathname;
+    
         if (path === '/' || path === '/shop') return 'shop';
-        if (path === '/dog/food') return 'dog-food';
-        if (path === '/dog/equipment') return 'dog-equipment';
-        if (path === '/cat/food') return 'cat-food';
-        if (path === '/cat/equipment') return 'cat-equipment';
+        if (path === '/dog') {
+            return productType === 'food' ? 'dog-food' : productType === 'equipment' ? 'dog-equipment' : 'dog';
+        }
+        if (path === '/cat') {
+            return productType === 'food' ? 'cat-food' : productType === 'equipment' ? 'cat-equipment' : 'cat';
+        }
         if (path === '/bird') return 'bird';
+    
         return 'shop'; // Default to "shop"
     };
+    
 
+    const handleMenuClick = (path, type) => {
+        setProductType(type); // Update context state
+        navigate(path); // Navigate to the desired route
+      };
     return (
         <div className={location.pathname === '/' ? 'banner' : ''}>
             <div className='navbar'>
@@ -229,7 +238,7 @@ const Navbar = () => {
                             חנות
                         </li>
                         <li
-                            onClick={() => navigate('/dog/food')}
+                            onClick={() => handleMenuClick("/dog", "food")}
                             style={{
                                 color: activeCategory() === 'dog-food' ? '#ff6347' : 'black',
                             }}
@@ -237,7 +246,7 @@ const Navbar = () => {
                             אוכל כלבים 
                         </li>
                         <li
-                            onClick={() => navigate('/dog/equipment')}
+                            onClick={() => handleMenuClick("/dog", "equipment")}
                             style={{
                                 color: activeCategory() === 'dog-equipment' ? '#ff6347' : 'black',
                             }}
@@ -245,7 +254,7 @@ const Navbar = () => {
                             ציוד כלבים 
                         </li>
                         <li
-                            onClick={() => navigate('/cat/food')}
+                            onClick={() => handleMenuClick("/cat", "food")}
                             style={{
                                 color: activeCategory() === 'cat-food' ? '#ff6347' : 'black',
                             }}
@@ -253,7 +262,7 @@ const Navbar = () => {
                             אוכל חתולים 
                         </li>
                         <li
-                            onClick={() => navigate('/cat/equipment')}
+                            onClick={() => handleMenuClick("/cat", "equipment")}
                             style={{
                                 color: activeCategory() === 'cat-equipment' ? '#ff6347' : 'black',
                             }}
@@ -261,7 +270,7 @@ const Navbar = () => {
                             ציוד חתולים 
                         </li>
                         <li
-                            onClick={() => navigate('/bird')}
+                            onClick={() => handleMenuClick("/bird", null)}
                             style={{
                                 color: activeCategory() === 'bird' ? '#ff6347' : 'black',
                             }}

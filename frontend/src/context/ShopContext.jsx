@@ -7,6 +7,7 @@ const ShopContextProvider = (props) => {
 
     const [products, setProducts] = useState([]); // State to store fetched product data
     const [brands, setBrands] = useState([]);
+    const [productType, setProductType] = useState(null);
     const [cartItems, setCartItems] = useState(() => {
         // Load initial cart data from localStorage or initialize with an empty object
         const savedCart = localStorage.getItem("cartItems");
@@ -78,6 +79,10 @@ const ShopContextProvider = (props) => {
         setCartItems({});
     };
 
+
+    const handleResetProductType = () => {
+        setProductType(null);
+    }
     // Context value
     const contextValue = {
         all_products: products,
@@ -90,6 +95,9 @@ const ShopContextProvider = (props) => {
         getTotalCartValue,
         getTotalItems,
         clearAllItemsFromCart,
+        productType,
+        setProductType,
+        handleResetProductType,
     };
 
     return (

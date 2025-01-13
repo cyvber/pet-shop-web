@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Footer.css';
 import logo from '../assets/frontend_assets/shop-logo.png';
 import facebook_icon from '../assets/frontend_assets/facebook.png';
@@ -6,12 +6,16 @@ import instagram_icon from '../assets/frontend_assets/instagram.png';
 import whatsapp_icon from '../assets/frontend_assets/whatsapp.png';
 import waze_icon from '../assets/frontend_assets/waze.png';
 import { useNavigate } from 'react-router-dom';
+import { ShopContext } from '../../context/ShopContext';
 
 const Footer = () => {
     const navigate = useNavigate();
-
+    const {
+        handleResetProductType,
+    } = useContext(ShopContext)
     const handleNavigation = (path) => {
         window.scrollTo(0, 0);
+        handleResetProductType()
         navigate(path);
     };
     
