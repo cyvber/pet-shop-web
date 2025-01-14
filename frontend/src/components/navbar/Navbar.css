@@ -93,8 +93,23 @@
     margin-left: -50px;
 }
 
+
+
+
+
+
 /* Responsive Styles */
 
+
+@media (max-width: 1200px) {
+    .nav-logo img {
+        width: 110px; /* Reduce logo size */
+        margin-right: 100px; /* Adjust spacing */
+    }
+    .nav-menu li {
+        font-size: 17px; /* Adjust font size */
+    }
+}
 /* For screens <= 1000px */
 @media (max-width: 1000px) {
     .nav-logo img {
@@ -119,7 +134,7 @@
 }
 
 /* For screens <= 800px */
-@media (max-width: 800px) {
+@media (max-width: 860px) {
     .navbar {
         flex-direction: column; /* Stack the navbar vertically */
         align-items: center;
@@ -141,19 +156,30 @@
         height: 40vh;
     }
 }
+
+
 /* For screens <= 600px */
 @media (max-width: 600px) {
+    .banner {
+        background-image: none;
+    }
+    .navbar {
+        padding-bottom: 60px;
+    }
     .nav-logo img {
-        width: 80px; /* Further reduce logo size */
+        width: 90px; /* Further reduce logo size */
     }
 
     .nav-menu {
         gap: 15px; /* Reduce gap further */
-        margin-right: 10px;
+        margin-right: 45px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     .nav-menu li {
-        font-size: 12px; /* Reduce font size */
-        background-color: #e7e7e7;
+        font-size: 16px; /* Reduce font size */
+        
         padding: 5px;
         text-align: right;
         border-radius: 5px;
@@ -167,10 +193,10 @@
     .cart-count {
         position: absolute; /* Use absolute positioning for better placement */
         bottom: 25px;
-        right: 210px; /* Adjust horizontal position to align with the icon */
-        width: 18px; /* Smaller width */
-        height: 18px; /* Smaller height */
-        font-size: 12px; /* Smaller font size */
+        right: 60px; /* Adjust horizontal position to align with the icon */
+        width: 20px; /* Smaller width */
+        height: 20px; /* Smaller height */
+        font-size: 13px; /* Smaller font size */
     }
 
     .nav-cart-user {
@@ -182,13 +208,6 @@
 }
 
 @media (max-width: 450px) {
-    .cart-count {
-        position: absolute; /* Use absolute positioning for better placement */
-        bottom: 25px;
-        right: 190px; /* Adjust horizontal position to align with the icon */
-        width: 18px; /* Smaller width */
-        height: 18px; /* Smaller height */
-        font-size: 12px; /* Smaller font size */
-    }
+ 
 }
   

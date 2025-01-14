@@ -40,7 +40,7 @@ const Footer = () => {
             <div className="col">
                 <div className="text">
                     <h4>יצירת קשר</h4>
-                    <p><strong>כתובת: </strong>סולטאני 54, כפר קאסם</p>
+                    <p><strong>כתובת: </strong>סולטאני 58, כפר קאסם</p>
                     <p><strong>טלפון: </strong>052-5330412</p>
                     <p><strong>שעות פתיחה: </strong>11:00 - 23:00</p>
                 </div>
@@ -49,7 +49,7 @@ const Footer = () => {
                     <a href="https://www.facebook.com/saba.essa1234" target="_blank" rel="noopener noreferrer"><img src={facebook_icon} alt="פייסבוק" /></a>
                     <a href="https://www.instagram.com/pet.shop_2019/" target="_blank" rel="noopener noreferrer"><img src={instagram_icon} alt="אינסטגרם" /></a>
                     <a href="https://wa.me/972525330412" target="_blank" rel="noopener noreferrer"><img src={whatsapp_icon} alt="וואטסאפ" /></a>
-                    <a href="https://waze.com/ul?place=hsv8yeysmx&navigate=yes" target="_blank" rel="noopener noreferrer"><img src={waze_icon} alt="ווייז" /></a>
+                    <a href="https://waze.com/ul/hsv8yeysmx&navigate=yes" target="_blank" rel="noopener noreferrer"><img src={waze_icon} alt="ווייז" /></a>
                 </div>
             </div>
             <div className="cpyright">

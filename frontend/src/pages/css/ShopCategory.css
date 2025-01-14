@@ -126,7 +126,7 @@
   
   @media (max-width: 1000px) {
     .category-banner {
-      height: 30vh;
+      height: 40vh;
     }
     .search-bar {
       width: 60%;
@@ -139,7 +139,10 @@
   }
   @media (max-width: 600px) {
     .category-banner {
-      height: 20vh;
+      height: 25vh;
+    }
+    .category-title {
+      font-size: 24px;
     }
   }
   @media (max-width: 450px) {
@@ -147,3 +150,4 @@
       display: none;
     }
   }
+
