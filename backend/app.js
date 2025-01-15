@@ -16,33 +16,29 @@ const app = express();
 
 // Environment Variables
 const mongo_url = process.env.MONGO_URL; // MongoDB connection string
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(",")
-  : [
-      process.env.WEB_URL,
-      process.env.LOCAL_HOST_URL,
-      process.env.ADMIN_URL,
-      process.env.WEB_APP_URL,
-    ].filter(Boolean); // Removes undefined if any variable is missing
-    
-
-
-// CORS Configuration
-app.use(
+const allowedOrigins = [
+    process.env.WEB_URL,
+    process.env.LOCAL_HOST_URL,
+    process.env.ADMIN_URL,
+    process.env.WEB_APP_URL,
+  ].filter(Boolean); // Ensures only defined variables are included
+  
+  // CORS Configuration
+  app.use(
     cors({
       origin: (origin, callback) => {
-        
         if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
+          callback(null, true); // Allow access
         } else {
-            console.error(`Blocked by CORS: ${origin}`); // Log blocked origins for debugging
-          callback(new Error("Not allowed by CORS"));
+          console.error(`Blocked by CORS: ${origin}`); // Log blocked origins
+          callback(new Error("Not allowed by CORS")); // Deny access
         }
       },
-      methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-      credentials: true, 
+      methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed HTTP methods
+      credentials: true, // Enable cookies and credentials for cross-origin requests
     })
   );
+  
   
   // Handle preflight OPTIONS requests
   app.options("*", cors());

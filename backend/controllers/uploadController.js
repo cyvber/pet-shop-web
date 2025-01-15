@@ -28,13 +28,14 @@ const logoStorage = multer.diskStorage({
     },
 });
 const uploadLogo = multer({ storage: logoStorage });
-const baseUrl = `http://localhost:${process.env.PORT}`;
+const baseUrl = `${process.env.API_URL}`;
+const localUrl = `http://localhost:${process.env.PORT}`;
 
 // Upload image handler
 exports.uploadImage = (req, res) => {
     res.json({
         success: 1,
-        image_url: `${baseUrl}/images/${req.file.filename}`,
+        image_url: `${localUrl}/images/${req.file.filename}`,
     });
 };
 
@@ -45,7 +46,7 @@ exports.uploadLogo = (req, res) => {
     }
     res.json({
         success: 1,
-        logo_url: `${baseUrl}/logos/${req.file.filename}`,
+        logo_url: `${localUrl}/logos/${req.file.filename}`,
     });
 };
 

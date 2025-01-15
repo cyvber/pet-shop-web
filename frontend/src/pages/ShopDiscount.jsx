@@ -5,7 +5,7 @@ import { ShopContext } from '../context/ShopContext';
 import Item from '../components/item/Item';
 
 const ShopDiscount = () => {
-    const { brandName } = useParams();
+    
     const { all_products } = useContext(ShopContext);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -49,7 +49,7 @@ const ShopDiscount = () => {
         <div className="brand">
             <div className="brand-title">
                 <h1>מבצעים</h1>
-                <p>{brandName}</p>
+                
             </div>
             <div className="search-bar">
                 <input
