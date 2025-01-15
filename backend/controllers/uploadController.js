@@ -35,7 +35,7 @@ const localUrl = `http://localhost:${process.env.PORT}`;
 exports.uploadImage = (req, res) => {
     res.json({
         success: 1,
-        image_url: `${localUrl}/images/${req.file.filename}`,
+        image_url: `${baseUrl}/images/${req.file.filename}`,
     });
 };
 
@@ -46,7 +46,7 @@ exports.uploadLogo = (req, res) => {
     }
     res.json({
         success: 1,
-        logo_url: `${localUrl}/logos/${req.file.filename}`,
+        logo_url: `${baseUrl}/logos/${req.file.filename}`,
     });
 };
 
