@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './css/ShopBrand.css';
+import './css/Loader.css';
 import { ShopContext } from '../context/ShopContext';
 import Item from '../components/item/Item';
 
@@ -84,8 +85,12 @@ const ShopBrand = () => {
                     )}
                 </div>
 
-                {isLoading && <p className="loading-message">טעינת מוצרים נוספים...</p>}
             </div>
+                  {/* "Scroll for more products" message */}
+            {!isLoading && visibleProducts < filteredProducts.length && (
+                <p className="scroll-message">⬇️ גלול למטה כדי לראות מוצרים נוספים ⬇️</p>
+            )}
+            {isLoading && <p className="loader"></p>}
         </div>
     );
 };

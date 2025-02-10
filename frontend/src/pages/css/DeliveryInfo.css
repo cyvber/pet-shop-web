@@ -1,0 +1,7 @@
+.delivery-info {
+    direction: rtl;
+    padding: 100px;
+}
+.delivery-description p{
+    font-size: 18px;
+}

@@ -11,10 +11,23 @@
 .product-info-display-left {
     max-width: 600px;
 }
-.product-image-container img {
-    width: 550px;
-    transition: transform 0.3s ease; 
+.product-image-container {
+    width: 550px; /* Ensures the container is fixed */
+    height: 550px; /* Set a fixed height to maintain uniformity */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Prevents images from overflowing */
 }
+
+.product-image-container img {
+    max-width: 100%; /* Ensures the image does not exceed the container */
+    max-height: 100%; /* Ensures the image fits within the container */
+    object-fit: contain; /* Ensures the full image is visible without cropping */
+    transition: transform 0.3s ease;
+}
+
+
 
 .product-image-container img:hover {
     transform: scale(1.1); /* Increases the image size by 10% */

@@ -1,22 +1,21 @@
 import React, { useContext } from 'react';
-import './PopularDiscount.css';
+import './BestSeller.css';
 import Item from '../item/Item';
 import { ShopContext } from '../../context/ShopContext';
-import { Link } from 'react-router-dom';
 
-const PopularDiscount = ({ name }) => {
+
+const BestSeller = () => {
     const { all_products } = useContext(ShopContext);
 
     // Filter for products of the input category, on discount, and limit to 8
     const filteredProducts = all_products
-    .filter((item) => item.on_discount && item.available) // Best sellers and available items
+    .filter((item) => item.best_seller && item.available) // Best sellers and available items
     .slice(0, 8); // Limit to 8 products
 
     return (
         <div className='popular'>
-            <h1> הכי חדש ב{name}</h1> {/* Dynamically set the title */}
+            <h1>המוצרים הנמכרים ביותר</h1> {/* Dynamically set the title */}
             <hr />
-            <Link to={'/discounts'} onClick={() => window.scrollTo(0, 0)}><p>להציג הכל</p></Link>
             <div className="popular-item">
                 {filteredProducts.map((item) => (
                     item.available && (
@@ -37,4 +36,4 @@ const PopularDiscount = ({ name }) => {
     );
 };
 
-export default PopularDiscount;
+export default BestSeller;

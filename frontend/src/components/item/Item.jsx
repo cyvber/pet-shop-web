@@ -40,14 +40,16 @@ const Item = (props) => {
             </Link>
             {/* Cart Icon */}
             <div className="item-top-elements">
-                <div className='cart-icon'>
-                    <img
-                        onClick={handleAddToCart}
-                        src={isInCart ? check_icon : cart_icon} // Dynamically switch icons
-                        alt={isInCart ? "In Cart" : "Add to Cart"}
-                        style={{ cursor: isInCart ? 'not-allowed' : 'pointer' }} // Disable clicking if already in cart
-                    />
-                </div>
+            <div className="cart-icon">
+    <img
+        onClick={handleAddToCart}
+        src={isInCart ? check_icon : cart_icon}
+        alt={isInCart ? "In Cart" : "Add to Cart"}
+        className={isInCart ? "added-to-cart" : ""}
+        style={{ cursor: isInCart ? "not-allowed" : "pointer" }}
+    />
+</div>
+
                 {props.on_discount && ( // Conditionally render the discount icon
                     <div className="discount-icon">
                         <p>מבצע!</p>

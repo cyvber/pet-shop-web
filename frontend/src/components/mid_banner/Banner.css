@@ -5,12 +5,14 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed; /* Keeps the background in place while scrolling */
     background-image: url('../assets/frontend_assets/WheatField.jpg');
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: "Rubik Scribble";
 }
+
 
 .cards {
     display: flex;

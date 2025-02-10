@@ -3,6 +3,8 @@ import './CartItems.css';
 import { ShopContext } from '../../context/ShopContext';
 import Checkout from '../checkout/Checkout'; // Import the new Checkout component
 import { useNavigate } from 'react-router-dom';
+import DeliveryInfo from '../deliveryInfo/DeliveryInfo';
+import PlaceOrder from '../placeOrder/PlaceOrder';
 
 const CartItems = () => {
     const {
@@ -13,11 +15,14 @@ const CartItems = () => {
         updateCartQuantity,
         getTotalCartValue,
         getTotalItems,
+        calculateDiscountedPrice,
     } = useContext(ShopContext);
 
     const navigate = useNavigate();
 
-    const getTotalPrice = (price, quantity) => price * quantity;
+    const getTotalPrice = (product, quantity) => calculateDiscountedPrice(product, quantity);
+    // const getTotalPrice = (price, quantity) => price * quantity;
+
 
     const cartProducts = all_products.filter((product) => cartItems[product.id] > 0);
     const isCartEmpty = cartProducts.length === 0;
@@ -50,7 +55,18 @@ const CartItems = () => {
                                     </select>
                                 </div>
                                 <div className="cartitem-remove-button-alignment">
-                                <p>סה"כ: ₪{getTotalPrice(product.price, cartItems[product.id]).toFixed(2)}</p>
+                                <p>
+                                    סה"כ: ₪
+                                    <span className="discounted-price">
+                                        {getTotalPrice(product, cartItems[product.id]).toFixed(2)}
+                                    </span>
+                                    {(product.on_discount && getTotalPrice(product, cartItems[product.id]) < product.price * cartItems[product.id]) && (
+                                            <span className="original-price">₪{(product.price * cartItems[product.id]).toFixed(2)}</span>
+                                    )}
+                                </p>
+                                {/* <p>סה"כ: ₪{getTotalPrice(product.price, cartItems[product.id]).toFixed(2)}</p> */}
+                                
+
                                 <button
                                     className="delete-button"
                                     onClick={() => clearItemFromCart(product.id)}
@@ -78,13 +94,24 @@ const CartItems = () => {
                     )}
                 </div>
             </div>
-
+            
+            
             {/* Pass data to the Checkout component */}
-            <Checkout
+            <PlaceOrder 
+    totalCartValue={getTotalCartValue()}
+    isCartEmpty={isCartEmpty}
+    cartItems={cartProducts.map(product => ({
+        id: product.id,
+        quantity: cartItems[product.id],
+        price: product.price,
+        discount_type: product.discount_type
+    }))}
+/>
+            {/* <Checkout
                 totalCartValue={getTotalCartValue()}
                 isCartEmpty={isCartEmpty}
                 navigateToOrder={() => navigate('/order')}
-            />
+            /> */}
         </div>
     );
 };

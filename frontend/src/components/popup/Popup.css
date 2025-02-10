@@ -1,0 +1,71 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    direction: rtl;
+}
+
+.popup {
+    position: relative; /* Ensure absolute positioning works inside */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Move the close button to the left */
+.popup span {
+    position: absolute;
+    top: 10px;
+    left: 10px;  /* Moves it to the left */
+    font-size: 28px;
+    cursor: pointer;
+    color: black;
+}
+
+.popup h3 {
+    text-align: center;
+    margin-top: 30px;
+}
+.popup p {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+.popup-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.popup-contact a {
+    display: flex;
+    align-items: center;
+    background-color: #25D366; /* WhatsApp green */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.popup-contact a:hover {
+    background-color: #1EBE5D; /* Slightly darker green on hover */
+}
+
+.popup-contact img {
+    width: 20px;  /* Ensures the image is the same height as text */
+    height: 20px;
+    margin-left: 8px; /* Space between icon and text */
+}

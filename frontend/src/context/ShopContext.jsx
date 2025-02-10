@@ -64,12 +64,56 @@ const ShopContextProvider = (props) => {
         });
     };
 
-    const getTotalCartValue = () => {
-        return products.reduce((total, product) => {
-            const quantity = cartItems[product.id] || 0;
-            return total + product.price * quantity;
-        }, 0);
+    const calculateDiscountedPrice = (product, quantity) => {
+        const { price, discount_type } = product;
+    
+        if (discount_type && /^\d+ב\d+$/.test(discount_type)) {
+            // Handle "3ב10" type discounts (e.g., "3 for 10")
+            const [requiredQty, discountedPrice] = discount_type.split('ב').map(Number);
+    
+            if (quantity >= requiredQty) {
+                const sets = Math.floor(quantity / requiredQty);
+                const remaining = quantity % requiredQty;
+                return sets * discountedPrice + remaining * price;
+            }
+        } 
+        
+        else if (discount_type && /^\d+%$/.test(discount_type)) {
+            // Handle "20%" type discounts
+            const discountPercentage = parseFloat(discount_type) / 100;
+            return quantity * price * (1 - discountPercentage);
+        }
+    
+        else if (discount_type && /^\d+\+\d+$/.test(discount_type)) {
+            // Handle "3+1" type discounts (e.g., "Buy 3, Get 1 Free")
+            const [requiredQty, freeQty] = discount_type.split('+').map(Number);
+    
+            const totalPaidItems = Math.ceil(quantity / (requiredQty + freeQty)) * requiredQty;
+            const maxPossibleItems = Math.floor(quantity / (requiredQty + freeQty)) * (requiredQty + freeQty) + (quantity % (requiredQty + freeQty));
+    
+            return (quantity === maxPossibleItems) ? totalPaidItems * price : quantity * price;
+        }
+    
+        // No discount, return regular price
+        return quantity * price;
     };
+    
+    
+      
+      const getTotalCartValue = () => {
+        return Object.keys(cartItems).reduce((total, productId) => {
+          const product = products.find((p) => p.id === Number(productId));
+          if (!product) return total;
+          return total + calculateDiscountedPrice(product, cartItems[productId]);
+        }, 0);
+      };
+      
+    // const getTotalCartValue = () => {
+    //     return products.reduce((total, product) => {
+    //         const quantity = cartItems[product.id] || 0;
+    //         return total + product.price * quantity;
+    //     }, 0);
+    // };
 
     const getTotalItems = () => {
         return Object.values(cartItems).reduce((total, quantity) => total + quantity, 0);
@@ -98,6 +142,7 @@ const ShopContextProvider = (props) => {
         productType,
         setProductType,
         handleResetProductType,
+        calculateDiscountedPrice,
     };
 
     return (

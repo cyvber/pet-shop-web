@@ -13,10 +13,12 @@ import birds_banner from './components/assets/frontend_assets/birds_banner.png';
 import ShopBrand from './pages/ShopBrand';
 import ShopDiscount from './pages/ShopDiscount';
 import Carousel from './components/logo_carousel/Carousel';
+import DeliveryInfo from './pages/DeliveryInfo';
+import Regulations from './pages/Regulations';
 
 
 function App() {
-  
+
   return (
     <div>
       <BrowserRouter basename='/'>
@@ -37,6 +39,9 @@ function App() {
           </Route>
           <Route path='/cart' element={<Cart />} />
           
+         <Route path='/delivery-info' element={< DeliveryInfo/>}/>
+         <Route path='/regulations' element={< Regulations/>}/>
+
         </Routes>
         <Carousel />
         <Footer />

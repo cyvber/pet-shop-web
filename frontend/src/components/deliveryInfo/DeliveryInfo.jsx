@@ -1,16 +1,17 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { TextField, Autocomplete, Box } from '@mui/material';
 import axios from 'axios';
+import './DeliveryInfo.css';
 
 const DeliveryInfo = forwardRef((_, ref) => {
     const [formData, setFormData] = useState({
-        name: '',
-        phone: '',
+        customer_name: '',
+        phone_number: '',
         email: '',
         city: '',
         address: '',
-        zipCode: '',
-        instructions: '',
+        zip_code: '',
+        delivery_instructions: '',
     });
 
     const [errors, setErrors] = useState({});
@@ -51,7 +52,7 @@ const DeliveryInfo = forwardRef((_, ref) => {
         const newErrors = {};
 
         // Required fields
-        if (!formData.name.trim()) newErrors.name = 'נא להזין שם מלא';
+        if (!formData.customer_name.trim()) newErrors.customer_name = 'נא להזין שם מלא';
         if (!formData.city.trim()) newErrors.city = 'נא להזין עיר';
         if (!formData.address.trim()) newErrors.address = 'נא להזין כתובת';
 
@@ -65,10 +66,10 @@ const DeliveryInfo = forwardRef((_, ref) => {
 
         // Phone number validation
         const phoneRegex = /^[0-9]+$/;
-        if (!formData.phone.trim()) {
-            newErrors.phone = 'נא להזין מספר טלפון';
-        } else if (!phoneRegex.test(formData.phone)) {
-            newErrors.phone = 'מספר טלפון צריך להכיל רק ספרות';
+        if (!formData.phone_number.trim()) {
+            newErrors.phone_number = 'נא להזין מספר טלפון';
+        } else if (!phoneRegex.test(formData.phone_number)) {
+            newErrors.phone_number = 'מספר טלפון צריך להכיל רק ספרות';
         }
 
         setErrors(newErrors);
@@ -78,7 +79,9 @@ const DeliveryInfo = forwardRef((_, ref) => {
 
     useImperativeHandle(ref, () => ({
         validate: validateFields,
+        getFormData: () => formData
     }));
+    
 
     const textFieldStyles = {
         '& .MuiInputLabel-root': {
@@ -105,26 +108,26 @@ const DeliveryInfo = forwardRef((_, ref) => {
             }}
         >
             <TextField
-                name="name"
+                name="customer_name"
                 label="שם מלא"
                 variant="standard"
-                value={formData.name}
+                value={formData.customer_name}
                 onChange={handleInputChange}
                 fullWidth
                 sx={textFieldStyles}
-                error={!!errors.name}
-                helperText={errors.name}
+                error={!!errors.customer_name}
+                helperText={errors.customer_name}
             />
             <TextField
-                name="phone"
+                name="phone_number"
                 label="טלפון"
                 variant="standard"
-                value={formData.phone}
+                value={formData.phone_number}
                 onChange={handleInputChange}
                 fullWidth
                 sx={textFieldStyles}
-                error={!!errors.phone}
-                helperText={errors.phone}
+                error={!!errors.phone_number}
+                helperText={errors.phone_number}
             />
             <TextField
                 name="email"
@@ -175,19 +178,19 @@ const DeliveryInfo = forwardRef((_, ref) => {
                 helperText={errors.address}
             />
             <TextField
-                name="zipCode"
+                name="zip_code"
                 label="מיקוד"
                 variant="standard"
-                value={formData.zipCode}
+                value={formData.zip_code}
                 onChange={handleInputChange}
                 fullWidth
                 sx={textFieldStyles}
             />
             <TextField
-                name="instructions"
+                name="delivery_instructions"
                 label="הוראות"
                 variant="standard"
-                value={formData.instructions}
+                value={formData.delivery_instructions}
                 onChange={handleInputChange}
                 multiline
                 rows={4}

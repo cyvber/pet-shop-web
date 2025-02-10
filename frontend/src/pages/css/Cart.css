@@ -4,3 +4,13 @@
     font-weight: 600;
     color: rgb(84, 84, 84);
 }
+
+.order-process-message {
+    direction: rtl;
+    padding: 20px 100px;
+    font-size: 18px;
+}
+.order-process-message span {
+    color: red;
+    margin-left: 10px;
+}

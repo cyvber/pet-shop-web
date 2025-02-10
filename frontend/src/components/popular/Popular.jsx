@@ -9,7 +9,7 @@ const Popular = ({ category, name }) => {
     
     // Filter for products of the input category and limit to 8
     const filteredProducts = all_products
-        .filter((item) => item.category === category && !item.on_discount) // Only products matching the given category
+        .filter((item) => item.category === category && !item.on_discount && item.available) // Only products matching the given category
         .slice(0, 8); // Limit to 8 products
 
     return (

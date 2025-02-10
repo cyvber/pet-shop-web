@@ -181,3 +181,19 @@
         font-size: 1em;
     }
 }
+.original-price {
+    text-decoration: line-through;
+    color: gray;
+    margin-left: 8px;
+  }
+  
+  .discounted-price {
+    font-weight: bold;
+    color: red;
+  }
+  .discount-message {
+    margin-right: 8px;
+    background-color: #ffe3ac;
+    padding: 4px;
+    border-radius: 2px;
+  }

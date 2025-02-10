@@ -9,6 +9,7 @@ const {
     removeDiscount,
     toggleProductAvailability,
     getProductById,
+    updateBestSellers,
 } = require("../controllers/productController");
 
 const router = express.Router();
@@ -23,6 +24,6 @@ router.post("/adddiscount", addDiscount);
 router.post("/removediscount", removeDiscount);
 router.post("/toggleavailable", toggleProductAvailability);
 router.get("/getproduct/:id", getProductById);
-
+router.put("/bestseller", updateBestSellers);
 
 module.exports = router;

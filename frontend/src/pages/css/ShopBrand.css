@@ -42,12 +42,12 @@
     justify-content: space-between;
     align-items: center;
     margin: 20px 0;
+    width: 40%;
 }
 
 .search-input {
     flex: 1;
     padding: 10px;
-    width: 400px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -82,3 +82,9 @@
 .brand-description {
     font-size: 16px;
 }
+
+@media (max-width: 1000px) {
+    .search-bar {
+      width: 60%;
+    }
+  }

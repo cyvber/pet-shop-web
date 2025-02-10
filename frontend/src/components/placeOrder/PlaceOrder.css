@@ -1,0 +1,77 @@
+.placeorder-section {
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    direction: rtl;
+    height: auto;
+}
+
+.placeorder-section h2 {
+    font-size: 22px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.checkout-customer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.placeorder-button-container {
+    display: flex;
+    justify-content: center; /* Centers the button horizontally */
+    margin-top: 30px; /* Adds spacing above the button */
+}
+
+.placeorder-button {
+    display: flex;
+    font-family: 'heebo';
+    gap: 10px; /* Add space between text and image */
+    background-color: #FCBB32;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 90px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.placeorder-button:hover {
+    transform: scale(1.02);
+}
+
+.placeorder-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+.order-total {
+    margin-top: 20px;
+    padding-top: 10px;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    direction: rtl; /* Ensure proper RTL alignment */
+    text-align: right; /* Align the text to the right */
+}
+
+.order-total div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.order-total .order-total-payment {
+    font-weight: bold;
+    color: #000;
+    border-top: 1px solid #333; /* Horizontal line above total payment */
+}
+

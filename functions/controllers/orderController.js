@@ -1,67 +1,63 @@
 const Order = require('../models/order'); 
 
+// exports.placeOrder = async (req, res) => {
+//   try {
+//       const { contact_info, order_items, total_price } = req.body;
+
+
+//       // Create new order
+//       const newOrder = new Order({
+//           contact_info,
+//           order_items,
+//           total_price
+//       });
+
+//       // Save order to database
+//       await newOrder.save();
+
+//       res.status(201).json({ message: 'Order placed successfully', order: newOrder });
+//   } catch (error) {
+//       console.error('Error placing order:', error);
+//       res.status(500).json({ message: 'Internal server error', error: error.message });
+//   }
+// };
+
+const { sendWhatsAppNotification } = require('./TwilioService');
+const { getProductNames } = require("./productController"); // Import function
+
 exports.placeOrder = async (req, res) => {
   try {
-    const {
-      contact,
-      order_items,
-      delivery_instructions,
-    } = req.body;
+    const { contact_info, order_items, total_price } = req.body;
 
-    // Validate required fields
-    if (!contact || !order_items || order_items.length === 0) {
-      return res.status(400).json({ message: 'Contact details and order items are required' });
-    }
-
-    // Validate contact fields
-    const { customer_name, phone, email, city, address, zip_code } = contact;
-    if (!customer_name || !phone || !email || !city || !address || !zip_code) {
-      return res.status(400).json({ message: 'All contact fields are required' });
-    }
-
-    // Calculate total amount
-    const total_amount = order_items.reduce((sum, item) => {
-      if (!item.product_id || !item.quantity || !item.price) {
-        throw new Error('Each order item must have product_id, quantity, and price');
-      }
-      return sum + item.quantity * item.price;
-    }, 0);
-
-    // Create the order object
+    // Create new order
     const newOrder = new Order({
-      contact: {
-        customer_name,
-        phone,
-        email,
-        city,
-        address,
-        zip_code,
-        delivery_instructions,
-      },
-      order_status: 'pending', // Default status is 'pending'
-      total_amount,
-      date: new Date(), // Automatically set the current date
-      updated_at: new Date(), // Same as creation date initially
-      order_items: order_items.map((item) => ({
-        product_id: item.product_id,
-        quantity: item.quantity,
-        price: item.price,
-        total_price: item.quantity * item.price,
-      })),
+      contact_info,
+      order_items,
+      total_price
     });
 
-    // Save the order to the database
+    // Save order to database
     await newOrder.save();
 
-    res.status(201).json({
-      message: 'Order placed successfully',
-      order: newOrder,
-    });
+    // Fetch product names
+    const productNames = await getProductNames(order_items);
+
+    // Send WhatsApp notification to admin
+    const orderDetails = `
+      שם: ${contact_info.customer_name}
+      סה"כ לתשלום: ₪${total_price}
+      מוצרים: ${productNames.join(", ")}
+    `;
+    sendWhatsAppNotification(orderDetails); // Trigger WhatsApp message
+
+    // Send success response with the new order
+    res.status(201).json({ message: "Order placed successfully", order: newOrder });
   } catch (error) {
-    console.error('Error placing order:', error);
-    res.status(500).json({ message: 'Failed to place order', error: error.message });
+    console.error("Error placing order:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
+
 exports.getAllOrders = async (req, res) => {
     try {
       const orders = await Order.find();
@@ -79,28 +75,28 @@ exports.getOrderById = async (req, res) => {
       res.status(500).json({ message: 'Error fetching order', error });
     }
   };
-exports.updateOrderStatus = async (req, res) => {
+  exports.updateOrderStatus = async (req, res) => {
     try {
-      const { status } = req.body;
-      const validStatuses = ['pending', 'completed', 'canceled'];
-  
-      if (!validStatuses.includes(status)) {
-        return res.status(400).json({ message: 'Invalid status' });
-      }
-  
-      const order = await Order.findOneAndUpdate(
-        { id: req.params.id },
-        { order_status: status, updated_at: Date.now() },
-        { new: true }
-      );
-  
-      if (!order) return res.status(404).json({ message: 'Order not found' });
-  
-      res.status(200).json({ message: 'Order status updated', order });
+        const { order_status } = req.body;
+        const validStatuses = ['pending', 'completed', 'canceled'];
+
+        if (!validStatuses.includes(order_status)) {
+            return res.status(400).json({ message: 'Invalid status' });
+        }
+
+        const order = await Order.findOneAndUpdate(
+            { order_id: req.params.id }, // Correct field name
+            { order_status, updated_at: Date.now() },
+            { new: true }
+        );
+
+        if (!order) return res.status(404).json({ message: 'Order not found' });
+
+        res.status(200).json({ message: 'Order status updated', order });
     } catch (error) {
-      res.status(500).json({ message: 'Error updating order status', error });
+        res.status(500).json({ message: 'Error updating order status', error });
     }
-  };
+};
 exports.deleteOrder = async (req, res) => {
     try {
       const order = await Order.findOneAndDelete({ id: req.params.id });

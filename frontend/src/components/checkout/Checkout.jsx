@@ -5,7 +5,7 @@ import DeliveryInfo from '../deliveryInfo/DeliveryInfo';
 
 const Checkout = ({ totalCartValue, isCartEmpty }) => {
     const deliveryInfoRef = useRef();
-
+    const API_URL = process.env.REACT_APP_API_URL;
     const totalPayment = (totalCartValue) => totalCartValue + 35;
 
     const handleCheckout = async () => {
@@ -16,7 +16,7 @@ const Checkout = ({ totalCartValue, isCartEmpty }) => {
         }
 
         try {
-            const response = await fetch('http://localhost:4000/create-paypal-order', {
+            const response = await fetch(`${API_URL}/create-paypal-order`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,26 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './css/ShopCategory.css';
+import './css/Loader.css';
 import { ShopContext } from '../context/ShopContext';
 import Item from '../components/item/Item';
 import { useLocation } from 'react-router-dom';
 
 const ShopCategory = (props) => {
-  const { all_products, productType} = useContext(ShopContext);
-  const [searchTerm, setSearchTerm] = useState(''); 
-  const [visibleProducts, setVisibleProducts] = useState(12); 
-  const [isLoading, setIsLoading] = useState(false); 
+  const { all_products, productType } = useContext(ShopContext);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [visibleProducts, setVisibleProducts] = useState(12);
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
-
 
   const filteredProducts = all_products.filter((item) => {
     return (
       props.category === item.category &&
-      (!productType || productType === item.product_type) && // Match type only if it exists
+      (!productType || productType === item.product_type) &&
       (
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.id.toString().includes(searchTerm) ||
-        (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) // Check for description
+        (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()))
       )
     );
   });
@@ -32,11 +32,11 @@ const ShopCategory = (props) => {
       !isLoading &&
       visibleProducts < filteredProducts.length
     ) {
-      setIsLoading(true); 
+      setIsLoading(true);
       setTimeout(() => {
-        setVisibleProducts((prev) => prev + 12); 
-        setIsLoading(false); 
-      }, 500); 
+        setVisibleProducts((prev) => prev + 12);
+        setIsLoading(false);
+      }, 500);
     }
   };
 
@@ -45,10 +45,8 @@ const ShopCategory = (props) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [visibleProducts, isLoading, filteredProducts]);
 
-
   const getTitle = () => {
     const path = location.pathname;
-
     if (path === '/dog') return 'מוצרים כלבים';
     if (path === '/dog/food') return 'אוכל כלבים';
     if (path === '/dog/equipment') return 'ציוד כלבים';
@@ -56,10 +54,8 @@ const ShopCategory = (props) => {
     if (path === '/cat/food') return 'אוכל חתולים';
     if (path === '/cat/equipment') return 'ציוד חתולים';
     if (path === '/bird') return 'מוצרים צפורים';
-
-    return 'Products'; // Default title
+    return 'Products';
   };
-
 
   return (
     <div className="category">
@@ -68,7 +64,6 @@ const ShopCategory = (props) => {
           <h1 className='category-title'>{getTitle()}</h1>
         </div>
         <img src={props.banner} alt="Category" className="category-banner-image" />
-        
       </div>
 
       <div className="search-bar">
@@ -83,6 +78,7 @@ const ShopCategory = (props) => {
           {filteredProducts.length} מוצרים
         </div>
       </div>
+
       <div className="content-container">
         <div className="category-products">
           {filteredProducts.length > 0 ? (
@@ -104,9 +100,14 @@ const ShopCategory = (props) => {
             <p className="no-results">לא נמצאו מוצרים התואמים לחיפוש שלך.</p>
           )}
         </div>
-
-        {isLoading && <p className="loading-message">טעינת מוצרים נוספים...</p>}
       </div>
+
+      {/* "Scroll for more products" message */}
+      {!isLoading && visibleProducts < filteredProducts.length && (
+        <p className="scroll-message">⬇️ גלול למטה כדי לראות מוצרים נוספים ⬇️</p>
+      )}
+
+      {isLoading && <p className="loader"></p>}
     </div>
   );
 };
